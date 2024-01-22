@@ -1,0 +1,20 @@
+---
+- name: Deploy Website on Apache Server
+  hosts: servers
+  become: yes  # Run tasks with elevated privileges
+
+  tasks:
+    - name: Install Apache web server
+      apt:
+        name: apache2
+        state: present
+
+    - name: Copy website files
+      copy:
+        src: /home/ubuntu/index.html
+        dest: /var/www/html/
+        
+    - name: restart apache
+      service:
+        name: apache2
+        state: restarted
